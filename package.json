@@ -35,11 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "constructs": "^10.3.0",
-    "esbuild": "^0.20.2",
-    "tsx": "^4.8.2",
-    "typescript": "^5.4.5"
   }
 }
