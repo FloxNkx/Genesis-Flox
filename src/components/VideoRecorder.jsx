@@ -87,7 +87,7 @@ const VideoRecorder = () => {
 
 				setVideoChunks(localVideoChunks);
 			}
-		}, 2000);
+		}, 5000);
 	};
 
 	const stopRecording = () => {
