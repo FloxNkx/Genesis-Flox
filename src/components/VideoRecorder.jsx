@@ -59,7 +59,7 @@ const VideoRecorder = () => {
 				setStream(combinedStream);
 
 				//set videostream to live feed player
-				liveVideoFeed.current.srcObject = videoStream;
+				// liveVideoFeed.current.srcObject = videoStream;
 			} catch (err) {
 				alert(err.message);
 			}
