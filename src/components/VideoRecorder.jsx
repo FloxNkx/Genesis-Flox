@@ -1,10 +1,15 @@
 import { useState, useRef } from "react";
-import { createClient } from '@supabase/supabase-js';
-import { v4 as uuidv4 } from 'uuid';
+import { createClient } from "@supabase/supabase-js";
+import { v4 as uuidv4 } from "uuid";
+
+import "./index.css";
 
 const mimeType = 'video/webm; codecs="opus,vp8"';
 
-const supabase = createClient("https://xuvxtryvruraqoeqhscv.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1dnh0cnl2cnVyYXFvZXFoc2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ1NjM0MTIsImV4cCI6MjAzMDEzOTQxMn0.OwoZGPVK9iTiJ5-SxBTXwaWYsc4BoLAZAj4dhvF_wmo");
+const supabase = createClient(
+	"https://xuvxtryvruraqoeqhscv.supabase.co",
+	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1dnh0cnl2cnVyYXFvZXFoc2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ1NjM0MTIsImV4cCI6MjAzMDEzOTQxMn0.OwoZGPVK9iTiJ5-SxBTXwaWYsc4BoLAZAj4dhvF_wmo"
+);
 
 const VideoRecorder = () => {
 	const [permission, setPermission] = useState(false);
@@ -62,6 +67,7 @@ const VideoRecorder = () => {
 	};
 
 	const startRecording = async () => {
+		getCameraPermission();
 		setRecordingStatus("recording");
 
 		const media = new MediaRecorder(stream, { mimeType });
@@ -92,53 +98,31 @@ const VideoRecorder = () => {
 
 			setRecordedVideo(videoUrl);
 
-			const { error } = await supabase.storage.from('videos').upload(uuidv4() + ".mp4", videoBlob)
+			const { error } = await supabase.storage
+				.from("videos")
+				.upload(uuidv4() + ".mp4", videoBlob);
 
-			if(error) {
+			if (error) {
 				console.log(error);
 				alert("Error uploading file to Supabase");
 			}
-			
+
 			setVideoChunks([]);
 		};
 	};
 
 	return (
-		<div>
-			<h2>Video Recorder</h2>
-			<main>
-				<div className="video-controls">
-					{!permission ? (
-						<button onClick={getCameraPermission} type="button">
-							Get Camera
-						</button>
-					) : null}
-					{permission && recordingStatus === "inactive" ? (
-						<button onClick={startRecording} type="button">
-							Start Recording
-						</button>
-					) : null}
-					{recordingStatus === "recording" ? (
-						<button onClick={stopRecording} type="button">
-							Stop Recording
-						</button>
-					) : null}
-				</div>
-			</main>
-
-			<div className="video-player">
-				{!recordedVideo ? (
-					<video ref={liveVideoFeed} autoPlay className="live-player"></video>
-				) : null}
-				{recordedVideo ? (
-					<div className="recorded-player">
-						<video className="recorded" src={recordedVideo} controls></video>
-						<a download href={recordedVideo}>
-							Download Recording
-						</a>
-					</div>
-				) : null}
-			</div>
+		<div className="video-controls">
+			{recordingStatus === "inactive" ? (
+				<button onClick={startRecording} type="button" class="recording">
+					Start Recording
+				</button>
+			) : null}
+			{recordingStatus === "recording" ? (
+				<button onClick={stopRecording} type="button" class="recording">
+					Stop Recording
+				</button>
+			) : null}
 		</div>
 	);
 };
