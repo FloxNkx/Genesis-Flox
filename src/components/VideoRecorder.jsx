@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,6 +23,10 @@ const VideoRecorder = () => {
 	const [recordedVideo, setRecordedVideo] = useState(null);
 
 	const [videoChunks, setVideoChunks] = useState([]);
+
+	useEffect(() => {
+		getCameraPermission()
+	}, [])
 
 	const getCameraPermission = async () => {
 		setRecordedVideo(null);
@@ -65,29 +69,23 @@ const VideoRecorder = () => {
 	};
 
 	const startRecording = async () => {
-		await getCameraPermission();
+		setRecordingStatus("recording");
 
-		setTimeout(() => {
-			if (permission) {
-				setRecordingStatus("recording");
+		const media = new MediaRecorder(stream, { mimeType });
 
-				const media = new MediaRecorder(stream, { mimeType });
+		mediaRecorder.current = media;
 
-				mediaRecorder.current = media;
+		mediaRecorder.current.start();
 
-				mediaRecorder.current.start();
+		let localVideoChunks = [];
 
-				let localVideoChunks = [];
+		mediaRecorder.current.ondataavailable = (event) => {
+			if (typeof event.data === "undefined") return;
+			if (event.data.size === 0) return;
+			localVideoChunks.push(event.data);
+		};
 
-				mediaRecorder.current.ondataavailable = (event) => {
-					if (typeof event.data === "undefined") return;
-					if (event.data.size === 0) return;
-					localVideoChunks.push(event.data);
-				};
-
-				setVideoChunks(localVideoChunks);
-			}
-		}, 5000);
+		setVideoChunks(localVideoChunks);
 	};
 
 	const stopRecording = () => {
