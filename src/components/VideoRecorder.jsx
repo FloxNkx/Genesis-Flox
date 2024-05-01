@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 
-import "./index.css";
 
 const mimeType = 'video/webm; codecs="opus,vp8"';
 
@@ -67,7 +66,7 @@ const VideoRecorder = () => {
 	};
 
 	const startRecording = async () => {
-		getCameraPermission();
+		await getCameraPermission();
 		setRecordingStatus("recording");
 
 		const media = new MediaRecorder(stream, { mimeType });
@@ -114,7 +113,7 @@ const VideoRecorder = () => {
 	return (
 		<div className="video-controls">
 			{recordingStatus === "inactive" ? (
-				<button onClick={startRecording} type="button" class="recording">
+				<button onClick={startRecording} type="button">
 					Start Recording
 				</button>
 			) : null}
