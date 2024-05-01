@@ -6,7 +6,7 @@ const mimeType = 'video/webm; codecs="opus,vp8"';
 
 const supabase = createClient(
 	"https://xuvxtryvruraqoeqhscv.supabase.co",
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1dnh0cnl2cnVyYXFvZXFoc2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ1NjM0MTIsImV4cCI6MjAzMDEzOTQxMn0.OwoZGPVK9iTiJ5-SxBTXwaWYsc4BoLAZAj4dhvF_wmo"
+	process.env.STORAGE_KEY
 );
 
 const VideoRecorder = () => {
