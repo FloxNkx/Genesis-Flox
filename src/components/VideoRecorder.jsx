@@ -67,23 +67,26 @@ const VideoRecorder = () => {
 
 	const startRecording = async () => {
 		await getCameraPermission();
-		setRecordingStatus("recording");
 
-		const media = new MediaRecorder(stream, { mimeType });
+		if(permission) {
+			setRecordingStatus("recording");
 
-		mediaRecorder.current = media;
+			const media = new MediaRecorder(stream, { mimeType });
 
-		mediaRecorder.current.start();
+			mediaRecorder.current = media;
 
-		let localVideoChunks = [];
+			mediaRecorder.current.start();
 
-		mediaRecorder.current.ondataavailable = (event) => {
-			if (typeof event.data === "undefined") return;
-			if (event.data.size === 0) return;
-			localVideoChunks.push(event.data);
-		};
+			let localVideoChunks = [];
 
-		setVideoChunks(localVideoChunks);
+			mediaRecorder.current.ondataavailable = (event) => {
+				if (typeof event.data === "undefined") return;
+				if (event.data.size === 0) return;
+				localVideoChunks.push(event.data);
+			};
+
+			setVideoChunks(localVideoChunks);
+		}
 	};
 
 	const stopRecording = () => {
@@ -122,6 +125,20 @@ const VideoRecorder = () => {
 					Stop Recording
 				</button>
 			) : null}
+
+			<div className="video-player">
+				{!recordedVideo ? (
+					<video ref={liveVideoFeed} autoPlay className="live-player"></video>
+				) : null}
+				{recordedVideo ? (
+					<div className="recorded-player">
+						<video className="recorded" src={recordedVideo} controls></video>
+						<a download href={recordedVideo}>
+							Download Recording
+						</a>
+					</div>
+				) : null}
+			</div>
 		</div>
 	);
 };

@@ -76,12 +76,6 @@ button:focus-visible {
 	align-items: center;
 }
 
-.live-player {
-	height: 200px;
-	width: 400px;
-	border: 1px solid #646cff;
-	margin-bottom: 30px;
-}
 .recorded-player video {
 	height: 400px;
 	width: 800px;
@@ -99,9 +93,14 @@ button:focus-visible {
   width: 100%;
 }
 
+.video-player {
+  height: 0px;
+  width: 0px;
+}
+
 .video-controls button {
-	width: 50vh;
-	height: 50vh;
+	width: 40vh;
+	height: 40vh;
 	border-radius: 100%;
 	font-size: 40px;
 	border: 3px solid red;
