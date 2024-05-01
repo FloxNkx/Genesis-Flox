@@ -117,7 +117,7 @@ button:focus-visible {
 	100% {transform: scale(0.9)}
 }
 
-*/ @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
 		background-color: #ffffff;
