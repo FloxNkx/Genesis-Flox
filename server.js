@@ -1,30 +1,40 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
+const express = require("express");
+const multer = require("multer");
+const { Pool } = require("pg");
+const fs = require("fs");
 
 const app = express();
 const port = 3000;
 
-// Multer setup for file upload
-const storage = multer.diskStorage({
-    destination: './uploads/',
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
+const pool = new Pool({
+    user: "genesis",
+    host: "dpg-coogcgev3ddc738nsmlg-a",
+    database: "genesis_w6n8e",
+    password: "MiiWg2l9zLD4D4fWCsWBNtNpR4F4Qs24",
+    port: 5432,
 });
 
-const upload = multer({ storage });
+// Configure multer to handle file uploads
+const upload = multer({ dest: "uploads/" });
 
-// Handle POST request to /upload
-app.post('/upload', upload.single('video'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).send('No file uploaded');
+// Endpoint to handle video upload
+app.post("/upload", upload.single("video"), async (req, res) => {
+    try {
+        // Save video file to database or disk
+        const videoData = fs.readFileSync(req.file.path);
+        // Store videoData in the database as binary data or save the file path
+        // Example query to insert file path into database:
+        await pool.query("INSERT INTO videos (file_path) VALUES ($1)", [
+            req.file.path,
+        ]);
+
+        res.status(200).send("Video uploaded successfully.");
+    } catch (err) {
+        console.error("Error uploading video:", err);
+        res.status(500).send("Error uploading video.");
     }
-
-    console.log('File uploaded:', req.file.filename);
-    res.status(200).send('File uploaded');
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is listening at http://localhost:${port}`);
 });
