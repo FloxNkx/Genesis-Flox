@@ -104,6 +104,9 @@ button:focus-visible {
 	border-radius: 100%;
 	font-size: 40px;
 	border: 3px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-controls button.recording {

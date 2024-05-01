@@ -126,19 +126,11 @@ const VideoRecorder = () => {
 				</button>
 			) : null}
 
-			<div className="video-player">
+			{/* <div className="video-player">
 				{!recordedVideo ? (
 					<video ref={liveVideoFeed} autoPlay className="live-player"></video>
 				) : null}
-				{recordedVideo ? (
-					<div className="recorded-player">
-						<video className="recorded" src={recordedVideo} controls></video>
-						<a download href={recordedVideo}>
-							Download Recording
-						</a>
-					</div>
-				) : null}
-			</div>
+			</div> */}
 		</div>
 	);
 };
