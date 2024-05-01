@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 
-
 const mimeType = 'video/webm; codecs="opus,vp8"';
 
 const supabase = createClient(
@@ -68,25 +67,27 @@ const VideoRecorder = () => {
 	const startRecording = async () => {
 		await getCameraPermission();
 
-		if(permission) {
-			setRecordingStatus("recording");
+		setTimeout(() => {
+			if (permission) {
+				setRecordingStatus("recording");
 
-			const media = new MediaRecorder(stream, { mimeType });
+				const media = new MediaRecorder(stream, { mimeType });
 
-			mediaRecorder.current = media;
+				mediaRecorder.current = media;
 
-			mediaRecorder.current.start();
+				mediaRecorder.current.start();
 
-			let localVideoChunks = [];
+				let localVideoChunks = [];
 
-			mediaRecorder.current.ondataavailable = (event) => {
-				if (typeof event.data === "undefined") return;
-				if (event.data.size === 0) return;
-				localVideoChunks.push(event.data);
-			};
+				mediaRecorder.current.ondataavailable = (event) => {
+					if (typeof event.data === "undefined") return;
+					if (event.data.size === 0) return;
+					localVideoChunks.push(event.data);
+				};
 
-			setVideoChunks(localVideoChunks);
-		}
+				setVideoChunks(localVideoChunks);
+			}
+		}, 2000);
 	};
 
 	const stopRecording = () => {
