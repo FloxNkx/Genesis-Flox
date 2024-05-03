@@ -18,10 +18,15 @@ const videoApi = {
     title
   }) => {
     try {
+      const videoBlob = await fetch(video).then((r) => r.blob());
+      const videoFile = new File([videoBlob], `${new Date().getMilliseconds()}.mp4`, { type: 'video/mp' });
+      const formData = new FormData(); // preparing to send to the server
+  
+      formData.append('file', videoFile); 
       const response = await privateClient.post(
         videoEndpoints.add,
         {
-          video,
+          video: formData,
           title
         }
       );
