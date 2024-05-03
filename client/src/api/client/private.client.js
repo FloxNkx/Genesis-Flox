@@ -14,7 +14,7 @@ privateClient.interceptors.request.use(async config => {
   return {
     ...config,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       "Authorization": `Bearer ${localStorage.getItem("actkn")}`
     }
   };
