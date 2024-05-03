@@ -1,8 +1,8 @@
 {
-  "name": "mern-stack-movie-2022",
+  "name": "flox_genesis",
   "type": "module",
   "version": "0.0.1",
-  "author": "tuat tran anh",
+  "author": "Dmytro Sabitov",
   "main": "index.js",
   "license": "MIT",
   "scripts": {

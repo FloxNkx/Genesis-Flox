@@ -36,4 +36,4 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
   process.exit(1);
 });
 
-//test
+export default app
