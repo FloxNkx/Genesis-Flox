@@ -4,7 +4,7 @@ import cloudinary from 'cloudinary'
 
 const addVideo = async (req, res) => {
   try {
-    console.log(req.file)
+    console.log(req.body, req.body.video)
     let file = new File([req.file], 'recording');
 
     console.log(file)
