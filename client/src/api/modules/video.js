@@ -19,7 +19,7 @@ const videoApi = {
   }) => {
     try {
       const videoBlob = await fetch(video).then((r) => r.blob());
-      const videoFile = new File([videoBlob], `${new Date().getMilliseconds()}.mp4`, { type: 'video/mp' });
+      const videoFile = new File([videoBlob], `${new Date().getMilliseconds()}.mp4`, { type: 'video/mp4' });
       const formData = new FormData(); // preparing to send to the server
   
       formData.append('file', videoFile); 
