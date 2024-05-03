@@ -1,5 +1,6 @@
 import express from "express";
 import videoController from "../controllers/video.controller.js";
+
 import multer from 'multer';
 
 const router = express.Router();

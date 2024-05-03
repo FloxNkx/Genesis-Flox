@@ -22,8 +22,8 @@ const VideoRecorder = () => {
 		if ("MediaRecorder" in window) {
 			try {
 				const videoConstraints = {
-					audio: false,
-					video: true,
+					audio: true,
+					video: false,
 				};
 				const audioConstraints = { audio: true };
 
@@ -80,8 +80,8 @@ const VideoRecorder = () => {
 			const videoBlob = new Blob(videoChunks, { type: mimeType });
 			const videoUrl = URL.createObjectURL(videoBlob);
 
-			console.log(videoBlob, 1)
-			await videoApi.add({ video: videoUrl, title: 'test'  });
+			console.log(videoBlob,videoUrl)
+			await videoApi.add({ video: videoBlob, title: 'test'  });
 
 			setVideoChunks([]);
 		};
@@ -95,7 +95,7 @@ const VideoRecorder = () => {
 				</button>
 			) : null}
 			{recordingStatus === "recording" ? (
-				<button onClick={stopRecording} type="button" class="recording">
+				<button onClick={stopRecording} type="button" className="recording">
 					Stop Recording
 				</button>
 			) : null}
