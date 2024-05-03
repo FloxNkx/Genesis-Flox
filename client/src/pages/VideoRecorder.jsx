@@ -16,7 +16,10 @@ const VideoRecorder = () => {
 					<div>
 						<p>{status}</p>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
-						{status === 'recording' && <button onClick={() => stopRecordingVideo(mediaBlobUrl)}>Stop Recording</button>}
+						{status === 'recording' && <button onClick={() => {
+							stopRecording();
+							stopRecordingVideo(mediaBlobUrl)
+						}}>Stop Recording</button>}
 					</div>
 				)}
 			/>
