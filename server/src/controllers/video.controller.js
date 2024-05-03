@@ -4,6 +4,11 @@ import cloudinary from 'cloudinary'
 
 const addVideo = async (req, res) => {
   try {
+    console.log(req.file, req)
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ error: 'No file provided in the request' });
+    }
+
     await cloudinary.v2.uploader.upload_stream({ resource_type: 'video' }, async (error, result) => {
       if (error) {
         console.error('Error uploading to Cloudinary:', error);
@@ -17,7 +22,7 @@ const addVideo = async (req, res) => {
       await video.save();
 
       res.status(201).json({ message: 'Video uploaded successfully'});
-    }).end(req.body.video);
+    }).end(req.file.buffer);
   } catch (error) {
     console.error('Error uploading video:', error);
     res.status(500).json({ error: 'Error uploading video' });
