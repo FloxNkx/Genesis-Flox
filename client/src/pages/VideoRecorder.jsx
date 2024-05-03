@@ -14,7 +14,6 @@ const VideoRecorder = () => {
 				video
 				render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
 					<div>
-						<p>{status}</p>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
 						{status === 'recording' && <button onClick={() => {
 							stopRecording();
