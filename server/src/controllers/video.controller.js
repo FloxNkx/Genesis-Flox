@@ -11,7 +11,7 @@ const addVideo = async (req, res) => {
 
     const video = new videoModel({
       title: req.body.title || 'Untitled Video',
-      video: result.secure_url,
+      video: req.body.video,
     });
 
     await video.save();
