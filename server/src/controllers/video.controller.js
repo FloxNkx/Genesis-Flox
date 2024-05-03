@@ -9,20 +9,28 @@ const addVideo = async (req, res) => {
       return res.status(400).json({ error: 'No file provided in the request' });
     }
 
-    await cloudinary.v2.uploader.upload_stream({ resource_type: 'video' }, async (error, result) => {
-      if (error) {
-        console.error('Error uploading to Cloudinary:', error);
-        return res.status(500).json({ error: 'Error uploading to Cloudinary' });
-      }
-      const video = new videoModel({
-        title: req.body.title || 'Untitled Video',
-        video: result.secure_url,
-      });
+    const video = new videoModel({
+      title: req.body.title || 'Untitled Video',
+      video: result.secure_url,
+    });
 
-      await video.save();
+    await video.save();
 
-      res.status(201).json({ message: 'Video uploaded successfully'});
-    }).end(req.body.video);
+    res.status(201).json({ message: 'Video uploaded successfully'});
+    // await cloudinary.v2.uploader.upload_stream({ resource_type: 'video' }, async (error, result) => {
+    //   if (error) {
+    //     console.error('Error uploading to Cloudinary:', error);
+    //     return res.status(500).json({ error: 'Error uploading to Cloudinary' });
+    //   }
+    //   const video = new videoModel({
+    //     title: req.body.title || 'Untitled Video',
+    //     video: result.secure_url,
+    //   });
+
+    //   await video.save();
+
+    //   res.status(201).json({ message: 'Video uploaded successfully'});
+    // }).end(req.body.video);
   } catch (error) {
     console.error('Error uploading video:', error);
     res.status(500).json({ error: 'Error uploading video' });
