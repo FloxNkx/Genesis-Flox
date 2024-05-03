@@ -4,7 +4,7 @@ import cloudinary from 'cloudinary'
 
 const addVideo = async (req, res) => {
   try {
-    console.log(req.body.video)
+    console.log(req)
     if (!req.file || !req.file.buffer) {
       return res.status(400).json({ error: 'No file provided in the request' });
     }
