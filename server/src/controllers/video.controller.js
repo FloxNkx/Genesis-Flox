@@ -6,6 +6,8 @@ const addVideo = async (req, res) => {
   try {
     let file = new File([req.body.video], 'recording');
 
+    console.log(file)
+
     await cloudinary.v2.uploader.upload_stream({ resource_type: 'video' }, async (error, result) => {
       if (error) {
         console.error('Error uploading to Cloudinary:', error);
