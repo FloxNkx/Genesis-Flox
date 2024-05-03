@@ -8,6 +8,7 @@ const VideoRecorder = () => {
 		await videoApi.add({ video: blob, title: "test" });
 	};
 
+
 	return (
 		<div className="video-controls">
 			<ReactMediaRecorder
@@ -16,8 +17,8 @@ const VideoRecorder = () => {
 					<div>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
 						{status === 'recording' && <button onClick={() => {
-							stopRecording();
 							stopRecordingVideo(mediaBlobUrl)
+							stopRecording();
 						}}>Stop Recording</button>}
 					</div>
 				)}
