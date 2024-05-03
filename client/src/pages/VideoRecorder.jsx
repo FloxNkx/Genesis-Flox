@@ -12,7 +12,7 @@ const VideoRecorder = () => {
 	return (
 		<div className="video-controls">
 			<ReactMediaRecorder
-				audio
+				video
 				render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
 					<div>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}

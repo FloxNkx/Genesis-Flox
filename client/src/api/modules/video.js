@@ -18,16 +18,13 @@ const videoApi = {
     title
   }) => {
     try {
-      console.log(video)
-      const audioBlob = await fetch(video).then((r) => r.blob());
-      const audioFile = new File([audioBlob], 'voice.wav', { type: 'audio/wav' });
+      const videoBlob = await fetch(video).then((r) => r.blob());
+      const videoFile = new File([videoBlob], `${new Date().getMilliseconds()}.mp4`, { type: 'video/mp4' });
       const formData = new FormData(); // preparing to send to the server
     // preparing to send to the server
 
-    console.log(audioFile)
-      formData.append('file', audioFile); 
+      formData.append('file', videoFile); 
 
-      console.log(formData.get('file'))
       const response = await privateClient.post(
         videoEndpoints.add,
         {
