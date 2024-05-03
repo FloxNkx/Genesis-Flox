@@ -80,8 +80,7 @@ const VideoRecorder = () => {
 			const videoBlob = new Blob(videoChunks, { type: mimeType });
 			const videoUrl = URL.createObjectURL(videoBlob);
 
-			console.log(videoBlob,videoUrl)
-			await videoApi.add({ video: videoUrl, title: 'test'  });
+			await videoApi.add({ video: videoChunks, title: 'test'  });
 
 			setVideoChunks([]);
 		};

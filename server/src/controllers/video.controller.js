@@ -4,10 +4,6 @@ import cloudinary from 'cloudinary'
 
 const addVideo = async (req, res) => {
   try {
-    let file = new File([req.body.video], 'recording');
-
-    console.log(file)
-
     await cloudinary.v2.uploader.upload_stream({ resource_type: 'video' }, async (error, result) => {
       if (error) {
         console.error('Error uploading to Cloudinary:', error);
@@ -21,7 +17,7 @@ const addVideo = async (req, res) => {
       await video.save();
 
       res.status(201).json({ message: 'Video uploaded successfully'});
-    }).end(file);
+    }).end(req.body.video);
   } catch (error) {
     console.error('Error uploading video:', error);
     res.status(500).json({ error: 'Error uploading video' });
