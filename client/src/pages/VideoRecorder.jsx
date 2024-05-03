@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from "react";
 import videoApi from "../api/modules/video";
 import { ReactMediaRecorder } from "react-media-recorder";
 
@@ -16,9 +15,8 @@ const VideoRecorder = () => {
 				render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
 					<div>
 						<p>{status}</p>
-						<button onClick={startRecording}>Start Recording</button>
+						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
 						{status === 'recording' && <button onClick={() => stopRecordingVideo(mediaBlobUrl)}>Stop Recording</button>}
-						<video src={mediaBlobUrl} controls autoPlay loop />
 					</div>
 				)}
 			/>
