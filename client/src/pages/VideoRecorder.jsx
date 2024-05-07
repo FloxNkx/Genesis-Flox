@@ -8,11 +8,17 @@ const VideoRecorder = () => {
 		await videoApi.add({ video: blob, title: "test" });
 	};
 
+	const sendVideo = async (files) => {
+		const file = files[0];
+		const formData = new FormData();
+		formData.append('file', file)
+		await videoApi.add({ video: files[0], title: "test" });
+	}
 
 	return (
 		<div className="video-controls">
 			<ReactMediaRecorder
-				video
+				audio
 				render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
 					<div>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
@@ -23,6 +29,8 @@ const VideoRecorder = () => {
 					</div>
 				)}
 			/>
+			
+			<input type="file" name="upload" onChange={(e) => sendVideo(e.target.files)} />
 		</div>
 	);
 };
