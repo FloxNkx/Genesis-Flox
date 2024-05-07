@@ -32,7 +32,6 @@ app.use((req, res, next) => {
 });
 
 app.set("view engine", "ejs");
-app.use("/", (req, res) => res.send('Hewllo'));
 app.use("/api/v1", routes)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
