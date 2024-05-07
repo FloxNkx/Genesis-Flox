@@ -5,9 +5,9 @@ import multer from "multer";
 
 const router = express.Router();
 
-let connection = mongoose.connection;
+// let connection = mongoose.connection;
 
-connection.on("open", () => {
+// connection.on("open", () => {
   try {
     console.log("connection established successfully");
     let bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
@@ -25,6 +25,6 @@ connection.on("open", () => {
   } catch (err) {
     console.log(err);
   }
-});
+// });
 
 export default router;
