@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
   server.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
   });
-  
+
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://genesis-lovat.vercel.app');
     res.header('Access-Control-Allow-Methods', "GET,OPTIONS,PATCH,DELETE,POST,PUT");
@@ -31,6 +31,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
   });
 
   app.set("view engine", "ejs");
+  app.use("/", (req, res) => res.send(<p>Helll</p>));
   app.use("/api/v1", routes);
 }).catch((err) => {
   console.log({ err });
