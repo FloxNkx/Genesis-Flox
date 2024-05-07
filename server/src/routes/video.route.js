@@ -5,26 +5,19 @@ import multer from "multer";
 
 const router = express.Router();
 
-// let connection = mongoose.connection;
+console.log("connection established successfully");
+let bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
 
-// connection.on("open", () => {
-  try {
-    console.log("connection established successfully");
-    let bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-    const storage = multer.memoryStorage();
-    const upload = multer({ storage });
+router.get("/video/:fileId", upload.single("file"), (req, res) =>
+  videoController.getVideo(req, res, bucket)
+);
 
-    router.get("/video/:fileId", upload.single("file"), (req, res) =>
-      videoController.getVideo(req, res, bucket)
-    );
-
-    router.post("/video", upload.single("file"), (req, res) =>
-      videoController.addVideo(req, res, bucket)
-    );
-  } catch (err) {
-    console.log(err);
-  }
+router.post("/video", upload.single("file"), (req, res) =>
+  videoController.addVideo(req, res, bucket)
+);
 // });
 
 export default router;
