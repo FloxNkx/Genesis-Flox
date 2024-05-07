@@ -1129,6 +1129,11 @@
     "statuses" "2.0.1"
     "unpipe" "~1.0.0"
 
+"flushwritable@^1.0.0":
+  "integrity" "sha512-3VELfuWCLVzt5d2Gblk8qcqFro6nuwvxwMzHaENVDHI7rxcBRtMCwTk/E9FXcgh+82DSpavPNDueA9+RxXJoFg=="
+  "resolved" "https://registry.npmjs.org/flushwritable/-/flushwritable-1.0.0.tgz"
+  "version" "1.0.0"
+
 "follow-redirects@^1.15.0":
   "integrity" "sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
@@ -1173,6 +1178,13 @@
   "version" "5.1.2"
   dependencies:
     "is-glob" "^4.0.1"
+
+"gridfs-stream@^1.1.1":
+  "integrity" "sha512-EcELdPIjC7tpZUiZA/8trfmszLbcsZlFyDQ8DhMtyJIMDmuLi5Vzt/056OO6FqfvY/zwiTCo1eZAqwtqrhBGMQ=="
+  "resolved" "https://registry.npmjs.org/gridfs-stream/-/gridfs-stream-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "flushwritable" "^1.0.0"
 
 "has-flag@^3.0.0":
   "integrity" "sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw=="

@@ -1,9 +1,5 @@
 import responseHandler from "../handlers/response.handler.js";
 import videoModel from "../models/video.model.js";
-import multer from 'multer';
-
-// Configure multer for handling file uploads
-const upload = multer({ dest: 'videos/' }); // Adjust the destination directory as needed
 
 const addVideo = async (req, res) => {
   try {
@@ -12,8 +8,14 @@ const addVideo = async (req, res) => {
     }
 
     const video = new videoModel({
-      title: req.body.title || 'Untitled Video',
-      video: req.file.path, // Assuming req.file contains the uploaded video file
+      fieldname: req.file.fieldname,
+      originalname: req.file.originalname,
+      encoding: req.file.encoding,
+      mimetype: req.file.mimetype,
+      destination:req.file.destination,
+      filename: req.file.filename,
+      path: req.file.path,
+      size: req.file.size
     });
 
     await video.save();

@@ -4,12 +4,15 @@ import modelOptions from "./model.options.js";
 export default mongoose.model(
   "Video",
   mongoose.Schema({
-    title: {
-      type: String
-    },
-    video: {
-      type: String,
-      required: true
-    },
+    fieldname: String,
+    originalname: String,
+    encoding: String,
+    mimeptype: String,
+    destination: String,
+    filename: String,
+    path: String,
+    size: Number,
+    created_at: Date,
+    updated_at: Date
   }, modelOptions)
 );
