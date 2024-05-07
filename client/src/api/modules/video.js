@@ -15,7 +15,6 @@ const videoApi = {
   },
   add: async ({
     video,
-    title
   }) => {
     try {
       const response = await privateClient.post(

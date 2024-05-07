@@ -5,20 +5,20 @@ import "./style.css";
 
 const VideoRecorder = () => {
 	const stopRecordingVideo = async (blob) => {
-		await videoApi.add({ video: blob, title: "test" });
+		const audioBlob = await fetch(blob).then((r) => r.blob());
+		const audioFile = new File([audioBlob], 'voice.wav', { type: 'audio/wav' });
+		
+		await videoApi.add({ video: audioFile });
 	};
 
 	const sendVideo = async (files) => {
-		const file = files[0];
-		const formData = new FormData();
-		formData.append('file', file)
 		await videoApi.add({ video: files[0], title: "test" });
 	}
 
 	return (
 		<div className="video-controls">
 			<ReactMediaRecorder
-				audio
+				video
 				render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
 					<div>
 						{status !== 'recording' && <button onClick={startRecording}>Start Recording</button>}
@@ -30,7 +30,7 @@ const VideoRecorder = () => {
 				)}
 			/>
 			
-			<input type="file" name="upload" onChange={(e) => sendVideo(e.target.files)} />
+			{/* <input type="file" name="upload" onChange={(e) => sendVideo(e.target.files)} /> */}
 		</div>
 	);
 };
