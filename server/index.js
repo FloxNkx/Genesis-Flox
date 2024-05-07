@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
   });
 
   app.set("view engine", "ejs");
-  app.use("/", (req, res) => res.send(<p>Helll</p>));
+  app.use("/", (req, res) => res.send('Hewllo'));
   app.use("/api/v1", routes);
 }).catch((err) => {
   console.log({ err });
