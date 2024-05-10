@@ -8,6 +8,10 @@ const router = express.Router();
 
 let connection = mongoose.connection;
 
+router.post("/videoss", upload.single("file"), (req, res) =>
+  videoController.addVideo(req, res, bucket)
+);
+
 connection.on("open", () => {
   console.log("connection established successfully");
   let bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db);
