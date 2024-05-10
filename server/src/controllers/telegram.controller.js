@@ -16,8 +16,6 @@ const sendMessage = async (req, res, bucket) => {
         res.send('Message sent to bot!');
     } catch (error) {
         res.status(500).json({ error: error })
-    } finally {
-        console.log(2)
     }
 };
 

@@ -74,8 +74,6 @@ const getVideo = async (req, res, bucket) => {
     downloadStream.pipe(res);
   } catch (error) {
     console.error("Error retrieving videos:", error);
-  } finally {
-    console.log(2)
   }
 };
 
