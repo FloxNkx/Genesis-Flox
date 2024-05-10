@@ -1,11 +1,12 @@
 import TeleBot from 'telebot';
 import videoController from "./video.controller.js";
 
-const bot = new TeleBot(process.env.BOT_TOKEN);
-const chatId = process.env.BOT_CHAT_ID;
-
 const sendMessage = async (req, res, bucket) => {
     try {
+        
+        const bot = new TeleBot(process.env.BOT_TOKEN);
+        const chatId = process.env.BOT_CHAT_ID;
+        
         const video = await videoController.getLastVideo()
 
         video.forEach(item => {
