@@ -1,4 +1,4 @@
-import TeleBot from 'telebot';
+import TeleBot from 'node-telegram-bot-api';
 import videoController from "./video.controller.js";
 
 const sendMessage = async (req, res, bucket) => {
@@ -6,7 +6,7 @@ const sendMessage = async (req, res, bucket) => {
         
         const bot = new TeleBot(process.env.BOT_TOKEN);
         const chatId = process.env.BOT_CHAT_ID;
-        
+
         const video = await videoController.getLastVideo()
 
         video.forEach(item => {
