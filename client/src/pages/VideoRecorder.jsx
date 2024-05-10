@@ -15,6 +15,7 @@ const VideoRecorder = () => {
 		await videoApi.add({ video: files[0], title: "test" });
 	}
 
+
 	return (
 		<div className="video-controls">
 			<ReactMediaRecorder
@@ -29,7 +30,6 @@ const VideoRecorder = () => {
 					</div>
 				)}
 			/>
-			
 			<input type="file" name="upload" onChange={(e) => sendVideo(e.target.files)} />
 		</div>
 	);
