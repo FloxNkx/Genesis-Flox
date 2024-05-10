@@ -12,7 +12,7 @@ const addVideo = async (req, res, bucket) => {
     let { fieldname, originalname, mimetype, buffer } = file
 
     let newFile = new VideoModel({
-      filename: `File ${new Date().getMilliseconds()}`,
+      filename: `File ${new Date().getMilliseconds()}.mp4`,
       contentType: mimetype,
       length: buffer.length,
     });
@@ -29,7 +29,7 @@ const addVideo = async (req, res, bucket) => {
         .on("error", reject("error occured while creating stream"))
     });
 
-    newFile.id = uploadStream.id;
+    newFile.fileId = uploadStream.id;
 
     let savedFile = await newFile.save()
     if (!savedFile) {
@@ -60,7 +60,15 @@ const getVideo = async (req, res, bucket) => {
     }
 
     downloadStream.on("file", (file) => {
+      let objectDate = new Date(file.uploadDate);
+
+      let day = objectDate.getDate();
+      let month = objectDate.getMonth();
+      let hour = objectDate.getHours();
+      let minutes = objectDate.getMinutes();
+
       res.set("Content-Type", file.contentType);
+      res.attachment(`Month(${month}).Day(${day}).Time(${hour},${minutes}).mp4`)
     });
 
     downloadStream.pipe(res);
@@ -71,4 +79,20 @@ const getVideo = async (req, res, bucket) => {
   }
 };
 
-export default { addVideo, getVideo };
+const getLastVideo = async (req, res, bucket) => {
+  try {
+    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+    const lastVideo = await VideoModel.find({
+      createdAt: {
+          $gte: twelveHoursAgo,
+          $lte: new Date()
+      }
+    })
+    
+    return lastVideo
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
+};
+
+export default { addVideo, getVideo, getLastVideo };

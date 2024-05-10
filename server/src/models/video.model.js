@@ -10,6 +10,7 @@ export default mongoose.model(
     mimeptype: String,
     destination: String,
     filename: String,
+    fileId: String,
     path: String,
     size: Number,
     created_at: Date,
