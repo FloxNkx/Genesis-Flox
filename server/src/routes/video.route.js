@@ -8,8 +8,8 @@ const router = express.Router();
 
 let connection = mongoose.connection;
 
-router.post("/videoss", upload.single("file"), (req, res) =>
-  videoController.addVideo(req, res, bucket)
+router.post("/videoss", (req, res) =>
+  res.send('Message sent to bot!')
 );
 
 connection.on("open", () => {
