@@ -7,17 +7,42 @@ import routes from "./src/routes/index.js";
 import cors from 'cors';
 
 const app = express();
+const port = process.env.PORT || 5000;
+let server;
 
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-  console.log("Mongodb connected");
-  server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+// Function to connect to MongoDB
+const connectToMongoDB = () => {
+  mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  }).then(() => {
+    console.log("Mongodb connected");
+    server = http.createServer(app);
+    server.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  }).catch((err) => {
+    console.log("Failed to connect to MongoDB. Retrying in 5 seconds...");
+    setTimeout(connectToMongoDB, 5000);
   });
-}).catch((err) => {
-  console.log({ err });
-  process.exit(1);
+};
+
+// Connect to MongoDB
+connectToMongoDB();
+
+// Event listeners for MongoDB connection events
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB connected');
 });
 
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://genesis-lovat.vercel.app');
@@ -25,8 +50,8 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
   res.header('Access-Control-Allow-Credentials', 'true');
   if (req.method === 'OPTIONS') {
-  res.status(200).end();
-  return;
+    res.status(200).end();
+    return;
   };
   next();
 });
@@ -38,8 +63,4 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-const port = process.env.PORT || 5000;
-
-const server = http.createServer(app);
-
-export default app
+export default app;
