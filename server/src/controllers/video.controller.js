@@ -79,7 +79,7 @@ const getVideo = async (req, res, bucket) => {
 
 const getLastVideo = async () => {
   try {
-    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+    const twelveHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const lastVideos = await VideoModel.find({
       createdAt: {
           $gte: twelveHoursAgo,
