@@ -19,10 +19,10 @@ const VideoRecorder = () => {
 		}
 	};
 
-	const onStartRecording = async () => {
+	const onStartRecording = async (mediaBlobUrl) => {
 		try {
 			interval = setInterval(() => {
-				onSendVideo()
+				onSendVideo(mediaBlobUrl)
 			}, 10000)
 		} catch (err) {
 			console.log(err);
