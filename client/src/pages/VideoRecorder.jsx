@@ -38,7 +38,7 @@ const VideoRecorder = () => {
 						{status !== "recording" && (
 							<button
 								onClick={() => {
-									onStartRecording();
+									onStartRecording(mediaBlobUrl);
 									startRecording();
 								}}
 							>
