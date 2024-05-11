@@ -29,7 +29,7 @@ const connectToMongoDB = () => {
 };
 
 // Connect to MongoDB
-connectToMongoDB();
+setTimeout(() => connectToMongoDB(), 10000);
 
 // Event listeners for MongoDB connection events
 mongoose.connection.on('connected', () => {
