@@ -9,6 +9,8 @@ import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 5000;
 
+let server;
+
 // Function to connect to MongoDB
 const connectToMongoDB = () => {
   mongoose.connect(process.env.MONGODB_URI, {
@@ -16,7 +18,7 @@ const connectToMongoDB = () => {
     useUnifiedTopology: true,
   }).then(() => {
     console.log("Mongodb connected");
-    const server = http.createServer(app);
+    server = http.createServer(app);
     server.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
