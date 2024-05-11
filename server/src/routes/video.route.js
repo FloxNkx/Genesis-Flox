@@ -35,6 +35,10 @@ connection.on("open", () => {
   router.get("/sendMessage", upload.single("file"), (req, res) =>
     telegramController.sendMessage(req, res, bucket)
   );
+
+  router.get("/sendStartMessage", (req, res) =>
+    telegramController.sendStartMessage(req, res, bucket)
+  );
 });
 
 export default router;
