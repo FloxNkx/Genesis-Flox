@@ -8,7 +8,6 @@ import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT || 5000;
-let server;
 
 // Function to connect to MongoDB
 const connectToMongoDB = () => {
@@ -17,7 +16,7 @@ const connectToMongoDB = () => {
     useUnifiedTopology: true,
   }).then(() => {
     console.log("Mongodb connected");
-    server = http.createServer(app);
+    const server = http.createServer(app);
     server.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
@@ -41,19 +40,7 @@ mongoose.connection.on('error', (err) => {
 
 mongoose.connection.on('disconnected', () => {
   console.log('MongoDB disconnected');
-});
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://genesis-lovat.vercel.app');
-  res.header('Access-Control-Allow-Methods', "GET,OPTIONS,PATCH,DELETE,POST,PUT");
-  res.header('Access-Control-Allow-Headers', "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
-  res.header('Access-Control-Allow-Credentials', 'true');
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  };
-  next();
-});
+});;
 
 app.set("view engine", "ejs");
 app.use("/api/v1", routes)

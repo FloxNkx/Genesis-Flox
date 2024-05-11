@@ -9,7 +9,7 @@ const addVideo = async (req, res, bucket) => {
     }
 
     let { file } = req
-    let { fieldname, originalname, mimetype, buffer } = file
+    let { fieldname, mimetype, buffer } = file
 
     let newFile = new VideoModel({
       filename: `File ${new Date().getMilliseconds()}.mp4`,
@@ -77,19 +77,19 @@ const getVideo = async (req, res, bucket) => {
   }
 };
 
-const getLastVideo = async (req, res, bucket) => {
+const getLastVideo = async () => {
   try {
     const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
-    const lastVideo = await VideoModel.find({
+    const lastVideos = await VideoModel.find({
       createdAt: {
           $gte: twelveHoursAgo,
           $lte: new Date()
       }
     })
     
-    return lastVideo
+    return lastVideos || []
   } catch (error) {
-    res.status(500).json({ error: error })
+    console.error(error)
   }
 };
 

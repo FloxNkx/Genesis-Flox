@@ -1,18 +1,21 @@
 import TeleBot from 'node-telegram-bot-api';
 import videoController from "./video.controller.js";
 
-const sendMessage = async (req, res, bucket) => {
-    try {
-        
+const sendMessage = async (req, res) => {
+    try {      
         const bot = new TeleBot(process.env.BOT_TOKEN);
         const chatId = process.env.BOT_CHAT_ID;
 
-        const video = await videoController.getLastVideo()
+        const videos = await videoController.getLastVideo()
 
-        video.forEach(item => {
-            return bot.sendMessage(chatId, `Link to video: [click](https://www.genesis-beige.vercel.app/api/v1/main/video/${item.fileId}/)`, { parseMode: 'Markdown' })
+        if(!videos.length) {
+            res.send('No video');
+            return;
+        }
+
+        videos?.forEach(item => {
+            return bot.sendMessage(chatId, `Link to video: <a href="https://www.genesis-beige.vercel.app/api/v1/main/video/${item.fileId}">Click</a>`,{ parse_mode : "HTML" })
         })
-        // bot.sendMessage(chatId, '1');
 
         res.send('Message sent to bot!');
     } catch (error) {
